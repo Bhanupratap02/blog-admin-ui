@@ -1,40 +1,48 @@
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import CancelIcon from '@mui/icons-material/Cancel';
 import "./s.css"
-function srcset(image, size, rows = 1, cols = 1) {
-  return {
-    src: `${image}?w=${size * cols}&h=${size * rows}&fit=crop&auto=format`,
-    srcSet: `${image}?w=${size * cols}&h=${size * rows
-      }&fit=crop&auto=format&dpr=2 2x`,
-  };
-}
-const ImageUpload = () => {
-  const [selectedImages, setSelectedImages] = useState([]);
 
+const ImageUpload = ({ value, setImgs, imgs, successMsg, }) => {
+  const [selectedImages, setSelectedImages] = useState([]);
+     useEffect(() => {
+       if(successMsg){
+        setSelectedImages([]);
+       }
+      
+     }, [successMsg])
+     
   const onSelectFile = (event) => {
     if (selectedImages.length < 2) {
       const selectedFiles = event.target.files;
       const selectedFilesArray = Array.from(selectedFiles);
-
+       
       const imagesArray = selectedFilesArray.map((file) => {
+      
+          setImgs(imgs => [...imgs, file])
+        
         return URL.createObjectURL(file);
       });
-
+      
       setSelectedImages((previousImages) => previousImages.concat(imagesArray));
+   
     }
 
 
     // FOR BUG IN CHROME
     event.target.value = "";
   };
-
+  
   function deleteHandler(image) {
+    
+    const index = selectedImages.indexOf(image)
+    setImgs(imgs.filter((e,i) => i !== index));
     setSelectedImages(selectedImages.filter((e) => e !== image));
     URL.revokeObjectURL(image);
   }
+   let display = value === 2 ? "" : "none"
   return (
-    <section className='bx'>
+    <section className='bx' style={{ display: display }}>
       <div className='row'>
         <div className="col-md-12 col-sm-12 col-lg-12">
           {selectedImages.length < 2 && (
@@ -84,17 +92,7 @@ const ImageUpload = () => {
           })}
       </div>
       
-{selectedImages.length > 0 && (
-        <button
-          className="upload-btn"
-          onClick={() => {
-            console.log(selectedImages);
-          }}
-        >
-          UPLOAD {selectedImages.length} IMAGE
-          {selectedImages.length === 1 ? "" : "S"}
-        </button>
-)}
+
      
     </section>
   );

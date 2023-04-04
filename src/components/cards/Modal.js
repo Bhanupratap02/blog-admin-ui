@@ -1,9 +1,9 @@
-import React from 'react'
+import React ,{useContext,useState} from 'react'
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { Autocomplete, TextField } from '@mui/material'
 import Modal from '@mui/material/Modal';
-
+import { CategoryContext } from '../../context/CategoryProvider';
 const style = {
     position: 'absolute',
     top: '35%',
@@ -21,19 +21,61 @@ const style = {
     p: 4,
 };
 
-function FormModal({open, setOpen, name}) {
-    const data = [
-        "Tech",
-        "Political",
-        "World Affair",
-        "Entertainment",
-        "Social",
-        "Enviroment",
-        "Name",
-        "Name",
-        "Name",
-    ]
-    const handleClose = () => setOpen(false);
+function FormModal({ open, setOpen, name, token }) {
+    const categoryContext = useContext(CategoryContext);
+    const { categories, createCategory, createSubcategory,
+        setCategory,
+        category,
+        setSubcategory,
+        subcategory ,
+        updateSubcategory,
+        updateCategory
+    
+    } = categoryContext
+    console.log(subcategory);
+    // const [addcategory, setAddCategory] = useState({
+    //     categoryName:""
+    // })
+    // const [addsubcategory, setAddSubcategory] = useState({})
+
+    const handleClose = () =>{ 
+        setCategory({})
+        setSubcategory({})
+        setOpen(false)
+    
+    };
+
+     const categorySubmit = () => {
+         createCategory(category.categoryName,token)
+         handleClose()
+     }
+     const subcategorySubmit = () =>{
+        let form = {
+            subcategory:subcategory.subcategoryName,
+            categoryId:subcategory.categoryId._id
+        }
+         createSubcategory(form,token)
+         handleClose()
+     }
+     const categoryUpdate = () =>{
+        let form ={
+            categoryId:category._id,
+            categoryName:category.categoryName
+        }
+         updateCategory(form,token)
+         handleClose()
+         
+     }
+     const subcategoryUpdate = () =>{
+         let form ={
+             categoryId: subcategory.categoryId._id,
+             subcategoryName:subcategory.subcategoryName,
+             subId:subcategory._id
+         }
+         console.log(form);
+        updateSubcategory(form,token)
+         handleClose()
+     }
   return (
       <div>
 
@@ -50,24 +92,50 @@ function FormModal({open, setOpen, name}) {
                       </div>
 
 
-                      {name === "Add Category" ? 
+                      {name === "Add Category" || name === "Update Category" ? 
                       <>
-                          <TextField id="outlined-basic" label="Category Name" variant="outlined" />
+                          <TextField id="outlined-basic" label="Category Name" variant="outlined" 
+                              name="categoryName" value={category?.categoryName || ""} onChange={(e) => setCategory({
+                                ...category,
+                                categoryName:e.target.value
+                             })}
+                          />
                       </>
-                      : 
+                      : name === "Add SubCategory" || name === "Update SubCategory" ? 
                       <>
                           <Autocomplete
                               disablePortal
                               id="combo-box-demo"
-                              options={data}
-                              renderInput={(params) => <TextField {...params} required label="Choose Category" />}
+                              options={categories}
+                                getOptionLabel={option =>  option.categoryName}
+                              onChange={(_, newValue) => {
+                                 setSubcategory({
+                                    ...subcategory,
+                                    categoryId:{_id:newValue._id}
+                                 })
+                              }}
+                              value={subcategory?.categoryId}
+                              renderInput={(params) => <TextField
+                              {...params} required label="Choose Category" />}
                           />
-                          <TextField id="outlined-basic" label="Sub Category Name" variant="outlined" />
+                          <TextField name='subcategory' id="outlined-basic" label="Sub Category Name" variant="outlined" value={subcategory?.subcategoryName || "" }
+                              onChange={(e) => setSubcategory({ ...subcategory, subcategoryName:e.target.value })}
+                           />
                       </>
                       
+                     : "" }
+               
+                  <Button  onClick={() =>{
+                      if (name === "Add Category") {
+                         categorySubmit()
+                      } else if (name === "Add SubCategory") {
+                         subcategorySubmit()
+                      } else if (name === "Update Category"){
+                          categoryUpdate();
+                      } else if (name === "Update SubCategory") {
+                            subcategoryUpdate()
                       }
-                
-                  <Button variant="outlined">Submit</Button>
+                  }} variant="outlined">Submit</Button>
               </Box>
           </Modal>
       </div>

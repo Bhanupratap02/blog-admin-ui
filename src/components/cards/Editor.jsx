@@ -3,7 +3,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import  {htmlToText} from 'html-to-text';
 import { height } from '@mui/system';
-const Editor = ({height}) => {
+const Editor = ({article,setArticle}) => {
     const [value, setValue] = useState();
 //        const wrapperRef = useCallback(wrapper =>{
 //             if(wrapper == null) return;
@@ -12,10 +12,14 @@ const Editor = ({height}) => {
 //             wrapper.append(editor)
 //        },[value])
 //   console.log(value)
+    const handleEditorChange = (event) =>{
+        console.log("from editor",event);
+        setValue(event)
+    }
     return(
         <div>
             <div style={{marginTop:"0.7rem"}}>
-                <ReactQuill theme={"snow"} value={value} onChange={setValue}
+                <ReactQuill theme={"snow"} value={value} onChange={handleEditorChange}
                  />
             </div>
              

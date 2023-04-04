@@ -1,12 +1,75 @@
-import React, { useState } from 'react';
-import { Editor, AddNav,ImageUpload,FirstStep ,SecondStep} from '../components';
-import { TextField, Autocomplete } from '@mui/material';
+import React, { useState,useEffect,useContext } from 'react';
+import { Snackbar,Alert } from '@mui/material';
+import {  AddNav,ImageUpload,FirstStep ,SecondStep} from '../components';
+import { AuthContext } from '../context/auth/AuthProvider';
+import {PostContext} from "../context/PostProvider"
+import { useNavigate } from "react-router-dom"
 function AddPost() {
-  const [value, setValue] = useState(0);
  
+  const navigate = useNavigate();
+
+  const authContext = useContext(AuthContext);
+  const {   isAuthenticated, token, } = authContext;
+  const postContext = useContext(PostContext);
+  const { submitPost, successMsg, errorMsg, setErrorMsg, setSuccessMsg ,loading} = postContext
+  useEffect(() => {
+    !isAuthenticated && navigate("/login")
+  }, [isAuthenticated, token])
+
+  const [value, setValue] = useState(0);
+  const [form, setForm] = useState({})
+  const [imgs, setImgs] = useState([]);
+  // const [loading, setLoading] = useState(false)
+  const prevStep = () => {
+    if (value === 1 || value === 2) {
+      setValue(value - 1)
+    }
+  }
+    const handleSubmit = (e) =>{
+     e.preventDefault();
+      submitPost(form, imgs, token) 
+    }
+
+    useEffect(() => {
+      if (successMsg) {
+        setForm({})
+        setImgs([])
+        setSuccessMsg("")
+        navigate("/posts")
+
+      }
+    }, [successMsg])
+    
+  const nextStep = () => {
+    if (value === 0) {
+      if (form?.title && form?.categoryId && form?.text) {
+        setValue(value + 1);
+      } else {
+
+        alert("Please fill all the fields with * mark");
+      }
+    } else if (value === 1) {
+      setValue(value + 1)
+    }
+
+
+  }
+  console.log(form);
   return (
     <div className='container-fluid  pt-3   panel'>
 
+    {/* {
+        successMsg && <Snackbar anchorOrigin={{
+          vertical: "top",
+          horizontal: "right"
+        }}
+          open={"open"} autoHideDuration={6000} onClose={() => setSuccessMsg("")}>
+          <Alert severity="error" onClose={() => setSuccessMsg("")}>
+            {successMsg}
+          </Alert>
+        </Snackbar> 
+    } */}
+      
       <div className='row mt-3' style={{
         justifyContent: "center"
       }}>
@@ -33,10 +96,12 @@ function AddPost() {
             </div>
 
             <div className="card-body overflow-auto">
-              {value === 0 && (<FirstStep/>)}
-              {value === 1 && (<SecondStep/>)}
-              {value === 2 && (<ImageUpload />)}
-
+            
+              <FirstStep setForm={setForm} form={form} token={token}  value={value} />
+              <SecondStep setForm={setForm} form={form}  token={token} value={value} />
+              <ImageUpload setForm={setForm} form={form} setImgs={setImgs} imgs={imgs} token={token} value={value}
+                successMsg={successMsg}
+               />
               <div className='p-3' style={{
                 justifyContent: "flex-end",
                 display: "flex", flexDirection: "row",
@@ -44,23 +109,26 @@ function AddPost() {
               }}>
                 {value !== 0 && (
                     <button className='btn btn-secondary'
-
-                      onClick={() => {
-                        if (value === 1 || value === 2) {
-                          setValue(value - 1)
-                        }
-                      }}
+                    disabled={loading ? true : false}
+                      onClick={() => prevStep()}
                     >
                       Back
                     </button>
                   )}
-                <button className='btn btn-secondary' onClick={() => {
-                  if (value === 0 || value === 1) {
-                    setValue(value + 1)
-                  }
-                }}>
-                  {value === 0 || value === 1 ? "Next" : "Submit"}
-                </button>
+
+                {value === 0 || value === 1 ? <button className='btn btn-secondary' onClick={() => nextStep()}>
+
+                Next
+                </button> : <button 
+                   disabled ={loading?true:false}
+                 className='btn btn-secondary' onClick={(e) => 
+                 
+                    handleSubmit(e)
+                  
+                   }>
+                  {loading?"Proccessing":"Submit"}
+                </button> }
+               
 
               </div>
 

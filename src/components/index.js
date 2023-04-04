@@ -8,6 +8,9 @@ import AddNav from "./nav/AddNav"
 import FirstStep from "./hero/FirstStep"
 import SecondStep from "./hero/SecondStep"
 import ImageUpload from "./hero/ImageUpload"
+import UserTable from "./tables/UserList";
+import CategoryTable from "./tables/Category";
+import SubCategoryTable from "./tables/Subcategory";
 export {
     Topbar,
     Nav,
@@ -18,6 +21,9 @@ export {
     AddNav,
     ImageUpload,
     FirstStep,
-    SecondStep
+    SecondStep,
+    UserTable,
+    CategoryTable,
+    SubCategoryTable
 
 }
