@@ -1,6 +1,6 @@
 import React from 'react'
-import { List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
-import { FeaturedPlayList, Home, Inbox, Lock, Mail, NoteAdd } from "@mui/icons-material"
+import { ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
+import { FeaturedPlayList, Home, Lock, NoteAdd } from "@mui/icons-material"
 const MenuItem = ({ open, navigate }) => {
     const data = [
         {
@@ -26,8 +26,13 @@ const MenuItem = ({ open, navigate }) => {
         },
         {
             name: "Categories",
-            icon: <Lock color='white' />,
+            icon: <FeaturedPlayList color='white' />,
             path: "/categories"
+        },
+        {
+            name: "Metadata",
+            icon: <FeaturedPlayList color='white' />,
+            path: "/showmetadata"
         }
 
 

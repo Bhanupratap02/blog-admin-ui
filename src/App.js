@@ -13,9 +13,11 @@ import { createMedia } from '@artsy/fresnel';
 import Category from './pages/Category';
 import Users from './pages/Users'
 import { AuthContext } from './context/auth/AuthProvider';
+import Metadata from './pages/Metadata';
+import DisplayMetadata from './pages/DisplayMetadata';
 
 function App() {
-  const { isAuthenticated} = useContext(AuthContext)
+  const { isAuthenticated } = useContext(AuthContext)
   const { MediaContextProvider, Media } = createMedia({
     // breakpoints values can be either strings or integers
     breakpoints: {
@@ -45,6 +47,9 @@ function App() {
                 <Route path='/posts' element={<Blogs />} />
                 <Route path='/users' element={<Users />} />
                 <Route path='/categories' element={<Category />} />
+                <Route path='/metadata' element={<Metadata />} />
+                <Route path='/showmetadata' element={<DisplayMetadata />} />
+                <Route path='/metadata/:metadataId' element={<Metadata />} />
                 <Route path='/login' element={<Login />} />
 
               </Routes>
@@ -62,12 +67,15 @@ function App() {
                 <Route path='/posts' element={<Blogs />} />
                 <Route path='/users' element={< Users />} />
                 <Route path='/categories' element={<Category />} />
+                <Route path='/metadata' element={<Metadata />} />
+                <Route path='/showmetadata' element={<DisplayMetadata />} />
+                <Route path='/metadata/:metadataId' element={<Metadata />} />
                 <Route path='/login' element={<Login />} />
 
               </Routes>
             </Box>
           </Media>
-          <Media at='lg'>
+          <Media greaterThanOrEqual="lg">
             <Box sx={{ display: "flex", gap: "1.5rem" }}>
               {isAuthenticated && <Nav active={true} />}
               <Routes>
@@ -77,6 +85,9 @@ function App() {
                 <Route path='/posts' element={<Blogs />} />
                 <Route path='/users' element={<Users />} />
                 <Route path='/categories' element={<Category />} />
+                <Route path='/metadata' element={<Metadata />} />
+                <Route path='/showmetadata' element={<DisplayMetadata />} />
+                <Route path='/metadata/:metadataId' element={<Metadata />} />
                 <Route path='/login' element={<Login />} />
 
               </Routes>

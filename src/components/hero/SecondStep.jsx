@@ -1,19 +1,19 @@
 import React from 'react'
-import { Box,TextField } from '@mui/material'
-const SecondStep = ({value,setForm,form}) => {
-   const display = value === 1 ? "":"none"
-   const handleChange = (e) =>{
-            console.log(form);
-            setForm({
-              ...form,
-              [e.target.name]: e.target.value
-            })
-   }
+import { Box, TextField } from '@mui/material'
+const SecondStep = ({ value, setForm, form }) => {
+  const display = value === 1 ? "" : "none"
+  const handleChange = (e) => {
+    // console.log(form);
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value
+    })
+  }
   return (
-    <Box sx={{display:display}}>
+    <Box sx={{ display: display }}>
       <div className="row mt-1" >
         <div className="col-sm-12 col-md-12 col-lg-12">
-          <TextField label="Brand" fullWidth name='brand' value={form.brand}  onChange={(e) => handleChange(e)} />
+          <TextField label="Brand" fullWidth name='brand' value={form.brand} onChange={(e) => handleChange(e)} />
         </div>
 
       </div>

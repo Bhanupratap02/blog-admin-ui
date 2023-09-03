@@ -10,8 +10,8 @@ const Home = () => {
   const { login, error, clearErrors, isAuthenticated, token, } = authContext;
 
   useEffect(() => {
-   !isAuthenticated && navigate("/login")
-  }, [isAuthenticated,token])
+    !isAuthenticated && navigate("/login")
+  }, [isAuthenticated, token])
 
   return (
     <div className='container-fluid mx-2 pt-2  panel' style={{

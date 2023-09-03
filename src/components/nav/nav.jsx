@@ -4,7 +4,9 @@ import { Box, List, CssBaseline, Divider, IconButton, Drawer as MuiDrawer } from
 import { ChevronLeft, ChevronRight } from "@mui/icons-material"
 import MenuItem from "./MenuItem"
 import { useNavigate } from 'react-router-dom';
+import logo from '../../img/logo.png'
 const drawerWidth = 210;
+
 const openedMixin = (theme) => ({
     width: drawerWidth,
     transition: theme.transitions.create('width', {
@@ -61,7 +63,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 
-export default function Nav({active,type}) {
+export default function Nav({ active, type }) {
     const theme = useTheme();
 
     const navigate = useNavigate()
@@ -76,7 +78,7 @@ export default function Nav({active,type}) {
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
 
-            <Drawer variant={type?type:"permanent"} open={open}>
+            <Drawer variant={type ? type : "permanent"} open={open}>
 
                 <DrawerHeader>
                     {open && (<Box display={"flex"} sx={{
@@ -84,8 +86,8 @@ export default function Nav({active,type}) {
                         justifyContent: "center",
                         gap: "10px"
                     }}>
-                        <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/SVG_Logo.svg/512px-SVG_Logo.svg.png' alt='logo' width={"39px"} height="39px" />
-                        <h3 className='mt-2'>CrozTek</h3>
+                        <img src={logo} alt='logo' width={"39px"} height="39px" />
+                        <h3 className='mt-2'>Kroztek</h3>
                     </Box>)}
                     <IconButton onClick={handleDrawerClose} sx={{ color: "tan" }}>
 
@@ -94,8 +96,8 @@ export default function Nav({active,type}) {
                 </DrawerHeader>
                 <Divider />
                 <List>
-                   
-                    <MenuItem open={open} navigate={navigate}/>
+
+                    <MenuItem open={open} navigate={navigate} />
                 </List>
 
             </Drawer>

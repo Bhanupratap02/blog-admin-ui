@@ -1,10 +1,10 @@
-import React ,{useContext,useEffect}from 'react'
-import { List, ListItem, ListItemText } from "@mui/material"
-import { Add } from '@mui/icons-material';
+import React, { useContext, useEffect } from 'react'
+// import { List, ListItem, ListItemText } from "@mui/material"
+// import { Add } from '@mui/icons-material';
 import { UserTable } from '../components';
 import { AuthContext } from '../context/auth/AuthProvider';
 import { useNavigate } from "react-router-dom"
-const Category = () => {
+const Users = () => {
     const navigate = useNavigate();
     const authContext = useContext(AuthContext);
     const { isAuthenticated, token, getAllUsers, users, setUsers, deleteUser } = authContext;
@@ -12,23 +12,23 @@ const Category = () => {
         !isAuthenticated && navigate("/login")
     }, [isAuthenticated, token])
     useEffect(() => {
-        if(users.length === 0){
+        if (users.length === 0) {
             getAllUsers(token)
-           
+
         }
- 
-     
-    },[users.length,token])
-    
+
+
+    }, [users.length, token])
+
     return (
         <div className='container-fluid mt-5'>
             <div style={{ background: " #ffffff", color: "#525", position: "relative", padding: "5px 15px", display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "0.9rem" }}>
                 <span style={{ fontWeight: "bolder", fontSize: "1.7rem" }}>Users</span>
-               
+
             </div>
-            <UserTable users={users} setUsers={setUsers} token={token} deleteUser={deleteUser}/>
+            <UserTable users={users} setUsers={setUsers} token={token} deleteUser={deleteUser} />
         </div>
     );
 }
 
-export default Category
+export default Users

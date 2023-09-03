@@ -1,16 +1,16 @@
-import  React ,{useContext,useState} from 'react';
+import React, { useContext, useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import { Delete, DeleteOutline,EditOutlined } from '@mui/icons-material';
+import { Delete, DeleteOutline, EditOutlined } from '@mui/icons-material';
 import { PostContext } from '../../context/PostProvider';
 import { Link } from 'react-router-dom';
-import { IconButton, Tooltip,Avatar } from '@mui/material';
+import { IconButton, Tooltip, Avatar } from '@mui/material';
 
 
-export default function BlogTable({token}) {
+export default function BlogTable({ token }) {
   const postContext = useContext(PostContext);
-  const { posts, deleteSinglePost,setPosts } = postContext
+  const { posts, deleteSinglePost, setPosts } = postContext
   const [selectedRows, setselectedRows] = useState([])
- 
+
   const columns = [
     {
       field: 'Image', headerName: 'Image', width: 80,
@@ -26,10 +26,10 @@ export default function BlogTable({token}) {
               width: "45px",
               borderRadius: "50%",
               objectFit: "cover"
-            }} />}
-            
-             
-            
+            }} alt='img-thumb' />}
+
+
+
 
           </div>
         )
@@ -41,38 +41,41 @@ export default function BlogTable({token}) {
       renderCell: (params) => {
         return (
           <div style={{
-            display:"flex",
-            alignItems:"center",
-            gap:"5px"
+            display: "flex",
+            alignItems: "center",
+            gap: "5px"
           }}>
             <span>
               {params.row.title}
             </span>
-          
+
           </div>
         )
       }
 
     },
-    { field: 'category', headerName: 'Category', width: 100 ,
+    {
+      field: 'category', headerName: 'Category', width: 100,
 
-    renderCell:(params) => {
-      return(
-        <span>
-          {params.row.category.categoryName}
-        </span>
-      )
-    }
-  
-  },
-    { field: 'subcategory', headerName: 'SubCategory', width: 100,
+      renderCell: (params) => {
+        return (
+          <span>
+            {params.row.category.categoryName}
+          </span>
+        )
+      }
+
+    },
+    {
+      field: 'subcategory', headerName: 'SubCategory', width: 100,
       renderCell: (params) => {
         return (
           <span>
             {params.row.subcategory?.subcategoryName}
           </span>
         )
-      } },
+      }
+    },
     {
       field: 'brand',
       headerName: 'Brand',
@@ -92,31 +95,31 @@ export default function BlogTable({token}) {
       field: 'websitesLink',
       headerName: 'WebsitesLink',
       width: 130,
-      renderCell:(params) =>{
+      renderCell: (params) => {
         return (
           <span>
             {params.row.websitesLink}
           </span>
         )
       }
-      
-    
-    },{
-      field:"edit",
-      headerName:"Edit",
-      width:150,
+
+
+    }, {
+      field: "edit",
+      headerName: "Edit",
+      width: 150,
       renderCell: (params) => {
         return (
           <div style={{
-            display:"flex",
-            justifyContent:"space-between"
+            display: "flex",
+            justifyContent: "space-between"
           }}>
-           
+
             <Link to={`/edit/${params.row._id}`} style={{
-              color:"#green"
+              color: "#green"
             }}>
               <EditOutlined />
-           </Link>
+            </Link>
             {/* <DeleteOutline
             sx={{
               color:"red"

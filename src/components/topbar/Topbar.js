@@ -1,10 +1,11 @@
 import * as React from 'react';
 
-import { AppBar, Box, CssBaseline, Divider, Drawer, IconButton, List,  Toolbar, Typography, Button } from "@mui/material"
+import { AppBar, Box, CssBaseline, Divider, Drawer, IconButton, List, Toolbar, Typography, Button } from "@mui/material"
 import { Menu } from "@mui/icons-material"
 import MenuItem from '../nav/MenuItem';
 
 import { useNavigate } from 'react-router-dom';
+import logo from '../../img/logo.png'
 
 
 
@@ -22,25 +23,25 @@ function DrawerAppBar(props) {
   };
 
   const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center',background:"#511" ,height:"100vh",color:"tan"}}>
+    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center', background: "#511", height: "100vh", color: "tan" }}>
 
       <Box sx={{
         alignItems: "center",
-        display:"flex",
-        justifyContent:"space-between",
-        padding:"1rem"
+        display: "flex",
+        justifyContent: "space-between",
+        padding: "1rem"
       }}>
-        <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/SVG_Logo.svg/512px-SVG_Logo.svg.png' alt='logo' width={"39px"} height="39px" />
+        <img src={logo} alt='logo' width={"39px"} height="39px" />
         <Typography variant="h6" sx={{ my: 2, color: "tan" }}>
-          CorozTek
+          Kroztek
         </Typography>
         <IconButton sx={{ color: "tan" }}>
         </IconButton>
-    </Box>
-     
-      <Divider sx={{background:"tan"}} />
+      </Box>
+
+      <Divider sx={{ background: "tan" }} />
       <List>
-        <MenuItem open={true} navigate={navigate}/>
+        <MenuItem open={true} navigate={navigate} />
       </List>
     </Box>
   );
@@ -64,22 +65,23 @@ function DrawerAppBar(props) {
             <Menu />
           </IconButton>
           <Box sx={{
-            display:"flex",
-            justifyContent:"center",
-            alignItems:"center",
-            gap:"1rem"
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "1rem"
           }}>
-            <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/SVG_Logo.svg/512px-SVG_Logo.svg.png' alt='logo' width={"39px"} height="39px" />
+            <img src={logo} alt='logo' width={"39px"} height="39px" />
             <Typography
               component="div"
-              sx={{ flexGrow: 1, display: { xs: 'block', sm: 'block' },
-                  fontSize:"2rem"
-               }}
+              sx={{
+                flexGrow: 1, display: { xs: 'block', sm: 'block' },
+                fontSize: "2rem"
+              }}
             >
-              CrozTek
+              Kroztek
             </Typography>
           </Box>
-         
+
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             {navItems.map((item) => (
               <Button key={item} sx={{ color: '#fff' }}>
